@@ -3,7 +3,7 @@ const BASE_URL = 'http://api.weatherapi.com/v1';
 const FORECAST_URL = `${BASE_URL}/forecast.json`;
 const CURRENT_URL = `${BASE_URL}/current.json`;
 
-// DOM Elements
+
 const searchInput = document.querySelector('.search-box input');
 const searchButton = document.querySelector('.search-box button');
 const weatherBox = document.querySelector('.weather-box');
@@ -18,7 +18,7 @@ const themeOptions = document.querySelectorAll('.theme-option');
 let hoverTimer;
 let isHovering = false;
 
-// Weather icons mapping
+
 const weatherIcons = {
     'Sunny': 'fa-sun',
     'Clear': 'fa-moon',
@@ -92,12 +92,12 @@ function showError(message) {
     }, 3000);
 }
 
-// Close error card
+
 closeError.addEventListener('click', () => {
     errorCard.classList.remove('show');
 });
 
-// Function to update time display
+
 function updateTimeDisplay(localTime) {
     const localTimeElement = document.querySelector('.local-time .time');
     const yourTimeElement = document.querySelector('.your-time .time');
@@ -109,7 +109,7 @@ function updateTimeDisplay(localTime) {
     yourTimeElement.textContent = yourDate.toLocaleTimeString();
 }
 
-// Function to create forecast card
+
 function createForecastCard(forecast) {
     const card = document.createElement('div');
     card.className = 'forecast-card';
@@ -127,7 +127,7 @@ function createForecastCard(forecast) {
     return card;
 }
 
-// Function to update forecast display
+
 function updateForecastDisplay(forecastData) {
     forecastContainer.innerHTML = '';
     forecastData.forecast.forecastday.forEach(day => {
@@ -137,7 +137,7 @@ function updateForecastDisplay(forecastData) {
     weeklyForecast.classList.add('show');
 }
 
-// Function to fetch weather data
+
 async function fetchWeather(city) {
     try {
         const [currentResponse, forecastResponse] = await Promise.all([
@@ -158,11 +158,11 @@ async function fetchWeather(city) {
     }
 }
 
-// Function to update weather display
+
 function updateWeatherDisplay(data) {
     const { current, forecast } = data;
     
-    // Set theme based on weather condition
+    
     const condition = current.current.condition.text.toLowerCase();
     if (condition.includes('sunny') || condition.includes('clear')) {
         document.documentElement.setAttribute('data-theme', 'sunny');
@@ -172,7 +172,7 @@ function updateWeatherDisplay(data) {
         document.documentElement.setAttribute('data-theme', 'cloudy');
     }
     
-    // Update current weather
+   
     document.querySelector('.temp').textContent = Math.round(current.current.temp_c);
     
     const weatherDesc = document.querySelector('.weather-desc');
@@ -185,18 +185,18 @@ function updateWeatherDisplay(data) {
     document.querySelector('.humidity-value').textContent = `${current.current.humidity}%`;
     document.querySelector('.wind-value').textContent = `${current.current.wind_kph} km/h`;
     
-    // Update time display
+
     updateTimeDisplay(current.location.localtime);
     
-    // Update forecast
+   
     updateForecastDisplay(forecast);
     
-    // Show weather box with animation
+    
     weatherBox.style.opacity = '1';
     weatherBox.style.transform = 'translateY(0)';
 }
 
-// Event listeners
+
 searchButton.addEventListener('click', async () => {
     const city = searchInput.value.trim();
     if (!city) return;
@@ -216,24 +216,24 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Initial weather for default city
+
 fetchWeather('London')
     .then(updateWeatherDisplay)
     .catch(error => showError(error.message));
 
-// Cursor animation
+
 document.addEventListener('mousemove', (e) => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
     
-    // Reset hover timer when moving
+   
     if (hoverTimer) {
         clearTimeout(hoverTimer);
         isHovering = false;
     }
 });
 
-// Star burst effect on hover
+
 document.addEventListener('mousemove', (e) => {
     if (!e.target.closest('.container')) {
         if (!isHovering) {
